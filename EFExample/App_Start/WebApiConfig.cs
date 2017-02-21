@@ -5,6 +5,8 @@ using System.Net.Http;
 using System.Web.Http;
 using Microsoft.Owin.Security.OAuth;
 using Newtonsoft.Json.Serialization;
+using System.Net.Http.Formatting;
+using EFExample.Common;
 
 namespace EFExample
 {
@@ -25,6 +27,10 @@ namespace EFExample
                 routeTemplate: "api/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
-        }
+
+			var jsonFormatter = new JsonMediaTypeFormatter();
+			//optional: set serializer settings here
+			config.Services.Replace(typeof(IContentNegotiator), new JsonContentNegotiator(jsonFormatter));
+		}
     }
 }
